@@ -78,7 +78,8 @@ export default function AdminPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pin === "thaychau") {
+    const adminPin = import.meta.env.VITE_ADMIN_PIN;
+    if (pin === adminPin) {
       setIsAuthenticated(true);
     } else {
       showToast("error", "Mã PIN không đúng!", "Lỗi đăng nhập");
