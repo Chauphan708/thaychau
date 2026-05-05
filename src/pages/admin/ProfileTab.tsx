@@ -122,7 +122,7 @@ interface ListSectionProps<T> {
   createDefault: () => T;
 }
 
-function ListSection<T extends Record<string, unknown>>({ title, items, setItems, fields, renderItem, createDefault }: ListSectionProps<T>) {
+function ListSection<T extends any>({ title, items, setItems, fields, renderItem, createDefault }: ListSectionProps<T>) {
   const [modalOpen, setModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [formValues, setFormValues] = useState<Record<string, unknown>>({});
