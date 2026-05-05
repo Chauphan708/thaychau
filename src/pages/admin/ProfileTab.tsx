@@ -8,22 +8,15 @@ import type { FormField } from "@/components/admin/FormModal";
 import type { TeachingPhilosophy, MilestoneItem, CertificateItem, SkillItem, FunFact } from "@/data/profileData";
 
 export default function ProfileTab() {
-  const {
-    bio, setBio,
-    funFacts, setFunFacts,
-    philosophies, setPhilosophies,
-    milestones, setMilestones,
-    skills, setSkills,
-    certificates, setCertificates,
-  } = useSiteData();
+  const siteData = useSiteData();
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       {/* Bio */}
       <Card title="📝 Giới thiệu bản thân">
         <textarea
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
+          value={siteData.bio}
+          onChange={(e) => siteData.setBio(e.target.value)}
           style={{ ...inputStyle, height: 120, resize: "vertical" }}
           placeholder="Viết vài dòng giới thiệu về bản thân..."
         />
@@ -32,8 +25,8 @@ export default function ProfileTab() {
       {/* Fun Facts */}
       <ListSection<FunFact>
         title="🎲 Số liệu vui"
-        items={funFacts}
-        setItems={setFunFacts}
+        items={siteData.funFacts}
+        setItems={siteData.setFunFacts}
         fields={[
           { key: "icon", label: "Emoji", type: "text", placeholder: "📅" },
           { key: "label", label: "Nhãn", type: "text", placeholder: "Năm kinh nghiệm", required: true },
@@ -48,8 +41,8 @@ export default function ProfileTab() {
       {/* Philosophies */}
       <ListSection<TeachingPhilosophy>
         title="💡 Triết lý giáo dục"
-        items={philosophies}
-        setItems={setPhilosophies}
+        items={siteData.philosophies}
+        setItems={siteData.setPhilosophies}
         fields={[
           { key: "icon", label: "Emoji", type: "text", placeholder: "🎯" },
           { key: "title", label: "Tiêu đề", type: "text", required: true },
@@ -64,8 +57,8 @@ export default function ProfileTab() {
       {/* Milestones */}
       <ListSection<MilestoneItem>
         title="🏆 Cột mốc sự nghiệp"
-        items={milestones}
-        setItems={setMilestones}
+        items={siteData.milestones}
+        setItems={siteData.setMilestones}
         fields={[
           { key: "year", label: "Năm", type: "text", required: true, placeholder: "2020" },
           { key: "title", label: "Tiêu đề", type: "text", required: true },
@@ -80,8 +73,8 @@ export default function ProfileTab() {
       {/* Skills */}
       <ListSection<SkillItem>
         title="🎯 Kỹ năng"
-        items={skills}
-        setItems={setSkills}
+        items={siteData.skills}
+        setItems={siteData.setSkills}
         fields={[
           { key: "name", label: "Tên kỹ năng", type: "text", required: true },
           { key: "level", label: "Mức độ (1-5)", type: "number", min: 1, max: 5 },
@@ -100,8 +93,8 @@ export default function ProfileTab() {
       {/* Certificates */}
       <ListSection<CertificateItem>
         title="📜 Chứng chỉ & Thành tích"
-        items={certificates}
-        setItems={setCertificates}
+        items={siteData.certificates}
+        setItems={siteData.setCertificates}
         fields={[
           { key: "title", label: "Tên chứng chỉ", type: "text", required: true },
           { key: "issuer", label: "Đơn vị cấp", type: "text", required: true },
