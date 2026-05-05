@@ -34,7 +34,7 @@ npm run dev
 
 ### 4. Đăng nhập Admin
 Truy cập đường dẫn `/admin` trên trình duyệt.
-*   **Mã PIN mặc định:** `thaychau`
+*   **Mã PIN:** Xem hoặc tùy chỉnh trong tệp `src/pages/AdminPage.tsx`.
 
 ## 🌍 Triển khai Online (Deploy)
 Dự án đã được cấu hình sẵn cho **Vercel**. Bạn có thể deploy nhanh bằng cách:
