@@ -6,7 +6,7 @@ import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import type { FormField } from "@/components/admin/FormModal";
 import type { CustomPageRow } from "@/services/cmsStore";
 import { saveCustomPage, deleteCustomPage } from "@/services/cmsStore";
-import { Plus, Pencil, Trash2, Globe, ExternalLink, Code, FileCode, GripVertical, Eye, EyeOff } from "lucide-react";
+import { Plus, Pencil, Trash2, Globe, ExternalLink, Code, FileCode, Eye, EyeOff } from "lucide-react";
 
 const contentTypeLabels: Record<string, { icon: React.ReactNode; label: string }> = {
   url: { icon: <ExternalLink style={{ width: 14, height: 14 }} />, label: "Link URL" },

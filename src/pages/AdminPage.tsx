@@ -55,18 +55,6 @@ function LoadingFallback() {
   );
 }
 
-// Placeholder cho tabs chưa xây (GĐ 2-4)
-function ComingSoon({ name }: { name: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 300, color: "var(--color-text-secondary)" }}>
-      <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>🚧</div>
-        <div style={{ fontSize: 16, fontWeight: 600, color: "var(--color-text)" }}>{name}</div>
-        <div style={{ fontSize: 13, marginTop: 4 }}>Module này sẽ được xây dựng ở giai đoạn tiếp theo.</div>
-      </div>
-    </div>
-  );
-}
 
 export default function AdminPage() {
   const { resetData } = useSiteData();

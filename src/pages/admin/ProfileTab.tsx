@@ -1,7 +1,7 @@
 // src/pages/admin/ProfileTab.tsx — CRUD hồ sơ cá nhân (6 sections)
 import { useState, useCallback } from "react";
 import { useSiteData } from "@/context/SiteContext";
-import { Pencil, Trash2, Plus, GripVertical } from "lucide-react";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import FormModal from "@/components/admin/FormModal";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import type { FormField } from "@/components/admin/FormModal";

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn, Calendar } from "lucide-react";
 import { useSiteData } from "@/context/SiteContext";
 import { galleryCategories } from "@/data/gallery";
-import type { GalleryCategory } from "@/data/gallery";
+import type { GalleryCategory, GalleryImage } from "@/data/gallery";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
 // ===== LIGHTBOX =====
@@ -14,7 +14,7 @@ function Lightbox({
   onPrev,
   onNext,
 }: {
-  images: typeof galleryImages;
+  images: GalleryImage[];
   currentIndex: number;
   onClose: () => void;
   onPrev: () => void;
@@ -120,7 +120,7 @@ function GalleryGrid({
   images,
   onImageClick,
 }: {
-  images: typeof galleryImages;
+  images: GalleryImage[];
   onImageClick: (index: number) => void;
 }) {
   return (
@@ -129,7 +129,7 @@ function GalleryGrid({
       className="columns-2 md:columns-3 gap-4 space-y-4"
     >
       <AnimatePresence mode="popLayout">
-        {images.map((image, i) => (
+        {images.map((image: GalleryImage, i: number) => (
           <motion.div
             key={image.id}
             layout

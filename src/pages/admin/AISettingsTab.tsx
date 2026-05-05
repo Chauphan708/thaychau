@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Key, Eye, EyeOff, CheckCircle, XCircle, HardDrive, Unlink, Brain, Mic, BookOpen, RefreshCw } from "lucide-react";
 import Card from "@/components/ui/Card";
-import { isValidGeminiKey, encodeApiKey, decodeApiKey } from "@/lib/security";
+import { isValidGeminiKey, decodeApiKey } from "@/lib/security";
 import { testGeminiConnection, saveGeminiApiKey as saveKey, clearGeminiApiKey } from "@/services/geminiAI";
 import { getGoogleClientId, setGoogleClientId, getGoogleApiKey, setGoogleApiKey } from "@/services/googleDrive";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";

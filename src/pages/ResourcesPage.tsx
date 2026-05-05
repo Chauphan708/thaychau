@@ -254,7 +254,7 @@ function ResourceCard({ item, index }: { item: ResourceItem; index: number }) {
 
 // ===== MAIN PAGE =====
 export default function ResourcesPage() {
-  const { config: siteConfig, resources } = useSiteData();
+  const { resources } = useSiteData();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("Tất cả");
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null);

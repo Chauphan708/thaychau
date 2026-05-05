@@ -80,9 +80,8 @@ export default function Navbar() {
 
           {/* Custom Pages — dynamic menu items */}
           {(() => {
-            const topPages = config.customPages?.filter((p: { visible: boolean; parent_slug: string | null }) => p.visible && !p.parent_slug) ?? [];
-            return topPages.map((page: { slug: string; title: string; icon: string; content_type: string; content: string; visible: boolean; parent_slug: string | null }) => {
-              const children = (config.customPages ?? []).filter((c: { parent_slug: string | null; visible: boolean }) => c.visible && c.parent_slug === page.slug) as typeof page[];
+            const topPages = customPages.filter((p) => p.visible && !p.parent_slug) ?? [];
+            return topPages.map((page) => {
               const isUrlType = page.content_type === "url";
               return (
                 <div key={page.slug} style={{ position: "relative" }} className="group">

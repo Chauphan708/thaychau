@@ -5,7 +5,7 @@ import FormModal from "@/components/admin/FormModal";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import DataTable from "@/components/admin/DataTable";
 import type { FormField } from "@/components/admin/FormModal";
-import type { ParentNotice, ScheduleSlot } from "@/data/weeklySchedule";
+import type { ParentNotice } from "@/data/weeklySchedule";
 import { Plus, Trash2 } from "lucide-react";
 
 // ============================================================
