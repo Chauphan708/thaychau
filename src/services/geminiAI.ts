@@ -179,7 +179,7 @@ export async function chatWithAI(messages: ChatMessage[], context?: string): Pro
 
 export async function testGeminiConnection(): Promise<{ ok: boolean; model?: string; error?: string }> {
   try {
-    const result = await callGemini("Xin chào! Trả lời ngắn gọn 1 câu bạn là ai.");
+    await callGemini("Xin chào! Trả lời ngắn gọn 1 câu bạn là ai.");
     return { ok: true, model: "Gemini 2.5 Flash", error: undefined };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : "Lỗi không xác định" };

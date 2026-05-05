@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Sparkles, ChevronRight, User, Award, BookOpen } from "lucide-react";
+import { Sparkles, ChevronRight, User, Award, BookOpen } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { useAI } from "@/hooks/useAI";
 import { mockStudents } from "@/data/aiMockData";

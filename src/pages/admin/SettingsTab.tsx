@@ -70,12 +70,12 @@ export default function SettingsTab() {
           return (
             <div key={key} style={{ padding: 16, borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border)", marginBottom: 12 }}>
               <ToggleField label={String(item.label ?? key)} checked={!!item.enabled} onChange={(v) => updateIntegration(key, "enabled", v)} />
-              {item.enabled && "url" in item && (
+              {!!item.enabled && "url" in item && (
                 <div style={{ marginTop: 8 }}>
                   <Field label="URL" value={String(item.url ?? "")} onChange={(v) => updateIntegration(key, "url", v)} placeholder="https://..." />
                 </div>
               )}
-              {item.enabled && "rootFolderId" in item && (
+              {!!item.enabled && "rootFolderId" in item && (
                 <div style={{ marginTop: 8 }}>
                   <Field label="Root Folder ID" value={String(item.rootFolderId ?? "")} onChange={(v) => updateIntegration(key, "rootFolderId", v)} />
                 </div>

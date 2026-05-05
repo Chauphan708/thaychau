@@ -73,23 +73,23 @@ export default function ResourcesTab() {
     <>
       <DataTable
         columns={[
-          { key: "type", label: "Loại", width: 50, render: (r) => typeIcons[(r as ResourceItem).type] ?? null },
+          { key: "type", label: "Loại", width: 50, render: (r) => typeIcons[(r as unknown as ResourceItem).type] ?? null },
           { key: "title", label: "Tiêu đề", render: (r) => (
             <div>
-              <div style={{ fontWeight: 600 }}>{(r as ResourceItem).title}</div>
+              <div style={{ fontWeight: 600 }}>{(r as unknown as ResourceItem).title}</div>
               <div style={{ fontSize: 11, color: "var(--color-text-secondary)", marginTop: 2 }}>
-                {(r as ResourceItem).description.slice(0, 80)}
+                {(r as unknown as ResourceItem).description.slice(0, 80)}
               </div>
             </div>
           )},
           { key: "subject", label: "Môn", width: 90, render: (r) => (
             <span style={{ padding: "2px 8px", borderRadius: "var(--radius-full)", background: "var(--color-primary)", color: "#fff", fontSize: 11, fontWeight: 600 }}>
-              {(r as ResourceItem).subject}
+              {(r as unknown as ResourceItem).subject}
             </span>
           )},
           { key: "grade", label: "Lớp", width: 50 },
           { key: "date", label: "Ngày", width: 100 },
-          { key: "featured", label: "⭐", width: 40, render: (r) => (r as ResourceItem).featured ? "⭐" : "" },
+          { key: "featured", label: "⭐", width: 40, render: (r) => (r as unknown as ResourceItem).featured ? "⭐" : "" },
         ]}
         data={resources as unknown as Record<string, unknown>[]}
         getKey={(r) => (r as unknown as ResourceItem).id}
