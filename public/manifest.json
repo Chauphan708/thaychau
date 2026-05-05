@@ -1,0 +1,20 @@
+{
+  "name": "Website Giáo Viên Tiểu Học",
+  "short_name": "GV Portfolio",
+  "description": "Website cá nhân giáo viên tiểu học — Kho học liệu, góc phụ huynh, thư viện sáng tạo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafbfc",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "vi"
+}
