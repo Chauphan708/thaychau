@@ -9,6 +9,7 @@ import ParentsPage from "@/pages/ParentsPage";
 import GalleryPage from "@/pages/GalleryPage";
 import AdminPage from "@/pages/AdminPage";
 import CustomPage from "@/pages/CustomPage";
+import QuickLinksPage from "@/pages/QuickLinksPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -31,6 +32,7 @@ function AppShell() {
           <Route path="/phu-huynh" element={<ParentsPage />} />
           <Route path="/thu-vien" element={<GalleryPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/link-nhanh" element={<QuickLinksPage />} />
           <Route path="/page/:slug" element={<CustomPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

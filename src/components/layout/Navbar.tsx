@@ -78,26 +78,22 @@ export default function Navbar() {
               );
             })}
 
-          {/* Custom Pages — dynamic menu items */}
-          {(() => {
-            const topPages = customPages.filter((p) => p.visible && !p.parent_slug) ?? [];
-            return topPages.map((page) => {
-              const isUrlType = page.content_type === "url";
-              return (
-                <div key={page.slug} style={{ position: "relative" }} className="group">
-                  {isUrlType ? (
-                    <a href={page.content} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-lg text-sm font-medium no-underline hover:opacity-80" style={{ color: "var(--color-text-secondary)" }}>
-                      {page.icon} {page.title}
-                    </a>
-                  ) : (
-                    <Link to={`/page/${page.slug}`} className="px-3 py-2 rounded-lg text-sm font-medium no-underline hover:opacity-80" style={{ color: location.pathname === `/page/${page.slug}` ? "#fff" : "var(--color-text-secondary)", background: location.pathname === `/page/${page.slug}` ? "var(--color-primary)" : "transparent" }}>
-                      {page.icon} {page.title}
-                    </Link>
-                  )}
-                </div>
-              );
-            });
-          })()}
+          {/* Custom Pages — grouped into Link Nhanh */}
+          {customPages.some((p) => p.visible) && (
+            <Link
+              to="/link-nhanh"
+              className={cn(
+                "px-3 py-2 rounded-lg text-sm font-medium transition-all no-underline",
+                location.pathname === "/link-nhanh" ? "text-white" : "hover:opacity-80"
+              )}
+              style={{
+                color: location.pathname === "/link-nhanh" ? "#fff" : "var(--color-text-secondary)",
+                background: location.pathname === "/link-nhanh" ? "var(--color-primary)" : "transparent",
+              }}
+            >
+              🔗 Link nhanh
+            </Link>
+          )}
 
           {/* OpenLMS link */}
           {siteConfig.integrations.openlms.enabled && (
@@ -170,19 +166,20 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Custom Pages — mobile */}
-              {customPages.filter((p) => p.visible && !p.parent_slug).map((page) => {
-                const isUrlType = page.content_type === "url";
-                return isUrlType ? (
-                  <a key={page.slug} href={page.content} target="_blank" rel="noopener noreferrer" className="px-4 py-3 rounded-lg text-sm font-medium no-underline" style={{ color: "var(--color-text)" }}>
-                    {page.icon} {page.title}
-                  </a>
-                ) : (
-                  <Link key={page.slug} to={`/page/${page.slug}`} onClick={() => setMobileOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium no-underline" style={{ color: location.pathname === `/page/${page.slug}` ? "#fff" : "var(--color-text)", background: location.pathname === `/page/${page.slug}` ? "var(--color-primary)" : "transparent" }}>
-                    {page.icon} {page.title}
-                  </Link>
-                );
-              })}
+              {/* Custom Pages — grouped into Link Nhanh (mobile) */}
+              {customPages.some((p) => p.visible) && (
+                <Link
+                  to="/link-nhanh"
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-3 rounded-lg text-sm font-medium no-underline transition-all"
+                  style={{
+                    color: location.pathname === "/link-nhanh" ? "#fff" : "var(--color-text)",
+                    background: location.pathname === "/link-nhanh" ? "var(--color-primary)" : "transparent",
+                  }}
+                >
+                  🔗 Link nhanh
+                </Link>
+              )}
               {siteConfig.integrations.openlms.enabled && (
                 <a
                   href={siteConfig.integrations.openlms.url}
