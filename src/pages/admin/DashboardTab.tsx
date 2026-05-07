@@ -7,7 +7,7 @@ import {
 import StatCard from "@/components/admin/StatCard";
 import { useSiteData } from "@/context/SiteContext";
 
-export default function DashboardTab() {
+export default function DashboardTab({ onNavigate }: { onNavigate?: (tab: string) => void }) {
   const {
     resources, goldenFaces, announcements, gallery,
     parentNotices, customPages, weeklySchedule,
@@ -46,15 +46,16 @@ export default function DashboardTab() {
       </h3>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12, marginBottom: 32 }}>
         {[
-          { label: "Thêm Học liệu", icon: BookOpen, color: "#2563eb" },
-          { label: "Thêm Thông báo", icon: Bell, color: "#ef4444" },
-          { label: "Thêm Ảnh", icon: ImageIcon, color: "#8b5cf6" },
-          { label: "Vinh danh HS", icon: Star, color: "#f59e0b" },
-          { label: "Tạo Trang con", icon: Globe, color: "#16a34a" },
-          { label: "Cập nhật TKB", icon: CalendarDays, color: "#0891b2" },
+          { label: "Thêm Học liệu", icon: BookOpen, color: "#2563eb", tab: "resources" },
+          { label: "Thêm Thông báo", icon: Bell, color: "#ef4444", tab: "announcements" },
+          { label: "Thêm Ảnh", icon: ImageIcon, color: "#8b5cf6", tab: "gallery" },
+          { label: "Vinh danh HS", icon: Star, color: "#f59e0b", tab: "golden-faces" },
+          { label: "Tạo Trang con", icon: Globe, color: "#16a34a", tab: "custom-pages" },
+          { label: "Cập nhật TKB", icon: CalendarDays, color: "#0891b2", tab: "parents" },
         ].map((action) => (
           <motion.button
             key={action.label}
+            onClick={() => onNavigate?.(action.tab)}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             style={{

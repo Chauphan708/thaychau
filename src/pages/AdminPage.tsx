@@ -184,7 +184,7 @@ export default function AdminPage() {
             <AnimatePresence mode="wait">
               <Suspense fallback={<LoadingFallback />}>
                 <motion.div key={activeTab} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.15 }}>
-                  {activeTab === "dashboard" && <DashboardTab />}
+                  {activeTab === "dashboard" && <DashboardTab onNavigate={(t) => setActiveTab(t as AdminTab)} />}
                   {activeTab === "settings" && <SettingsTab />}
                   {activeTab === "appearance" && <AppearanceTab />}
                   {activeTab === "profile" && <ProfileTab />}
