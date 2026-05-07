@@ -1,6 +1,6 @@
 // src/pages/admin/SettingsTab.tsx — Cài đặt chung (CRUD cho siteConfig)
 import { useSiteData } from "@/context/SiteContext";
-import { User, Quote, Link, Timer, Puzzle } from "lucide-react";
+import { User, Quote, Link, Timer, Puzzle, Save } from "lucide-react";
 import type { SiteConfig } from "@/data/siteConfig";
 
 export default function SettingsTab() {
@@ -27,7 +27,7 @@ export default function SettingsTab() {
         <Grid>
           <Field label="Tên giáo viên" value={config.teacherName} onChange={(v) => update("teacherName", v)} />
           <Field label="Trường học" value={config.school} onChange={(v) => update("school", v)} />
-          <Field label="Quận/Huyện" value={config.district} onChange={(v) => update("district", v)} />
+          <Field label="Xã/Phường" value={config.district} onChange={(v) => update("district", v)} />
           <Field label="Email" value={config.email} onChange={(v) => update("email", v)} type="email" />
           <Field label="Số điện thoại" value={config.phone} onChange={(v) => update("phone", v)} type="tel" />
           <Field label="Zalo" value={config.zaloLink} onChange={(v) => update("zaloLink", v)} placeholder="https://zalo.me/..." />
@@ -106,6 +106,20 @@ export default function SettingsTab() {
           </div>
         </div>
       </Section>
+
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+        <button
+          onClick={() => alert("Hệ thống luôn tự động lưu mỗi khi thầy gõ phím. Dữ liệu đã được lưu an toàn!")}
+          style={{
+            display: "flex", alignItems: "center", gap: 8,
+            padding: "10px 24px", background: "var(--color-primary)",
+            color: "#fff", border: "none", borderRadius: "var(--radius-md)",
+            fontWeight: 600, cursor: "pointer", fontSize: 14
+          }}
+        >
+          <Save size={18} /> Lưu thay đổi
+        </button>
+      </div>
     </div>
   );
 }
