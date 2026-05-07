@@ -2,9 +2,11 @@
 import { useSiteData } from "@/context/SiteContext";
 import { User, Quote, Link, Timer, Puzzle, Save } from "lucide-react";
 import type { SiteConfig } from "@/data/siteConfig";
+import { useState } from "react";
 
 export default function SettingsTab() {
   const { config, setConfig } = useSiteData();
+  const [subjectsStr, setSubjectsStr] = useState(config.subjects.join(", "));
 
   const update = (key: keyof SiteConfig, value: unknown) => {
     setConfig({ ...config, [key]: value } as SiteConfig);
@@ -89,7 +91,16 @@ export default function SettingsTab() {
       <Section icon={<Puzzle style={iconSm} />} title="Môn học & Khối lớp">
         <div style={{ marginBottom: 12 }}>
           <Label>Môn học (cách nhau bằng dấu phẩy)</Label>
-          <input type="text" value={config.subjects.join(", ")} onChange={(e) => update("subjects", e.target.value.split(",").map((s) => s.trim()).filter(Boolean))} style={inputStyle} />
+          <input 
+            type="text" 
+            value={subjectsStr} 
+            onChange={(e) => {
+              setSubjectsStr(e.target.value);
+              update("subjects", e.target.value.split(",").map((s) => s.trim()).filter(Boolean));
+            }} 
+            onBlur={() => setSubjectsStr(config.subjects.join(", "))}
+            style={inputStyle} 
+          />
         </div>
         <div>
           <Label>Khối lớp</Label>
