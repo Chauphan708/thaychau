@@ -10,7 +10,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://accounts.google.com https://apis.google.com; connect-src 'self' https://generativelanguage.googleapis.com https://www.googleapis.com; frame-src https://docs.google.com https://drive.google.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://accounts.google.com https://apis.google.com; connect-src 'self' https://generativelanguage.googleapis.com https://www.googleapis.com https://qukuafjagkmcegksovp.supabase.co; frame-src https://docs.google.com https://drive.google.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com https://qukuafjagkmcegksovp.supabase.co" }
       ]
     }
   ]
