@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BookOpen, Users, ImageIcon, ExternalLink, Clock,
   ChevronLeft, ChevronRight, Star, AlertCircle, Info, Calendar,
@@ -172,61 +172,63 @@ function GoldenFacesSection() {
   const next = () => setCurrentIndex((i) => (i + 1) % goldenFaces.length);
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 mb-16">
-      <div className="text-center mb-6">
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 mt-16 mb-16">
+      <div className="text-center mb-10">
         <h2 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
           ⭐ Gương Mặt Vàng
         </h2>
-        <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>Tuyên dương học sinh xuất sắc</p>
+        <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>Tuyên dương học sinh xuất sắc</p>
       </div>
 
       <div className="relative max-w-md mx-auto">
         {/* Card */}
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.4 }}
-          className="golden-glow rounded-2xl p-6 text-center"
-          style={{ background: "var(--color-card)", border: "2px solid rgba(245,158,11,0.3)" }}
-        >
-          <div
-            className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4"
-            style={{ background: "linear-gradient(135deg, #f59e0b, #d97706)" }}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="golden-glow rounded-2xl p-6 text-center"
+            style={{ background: "var(--color-card)", border: "2px solid rgba(245,158,11,0.3)" }}
           >
-            {goldenFaces[currentIndex].image ? (
-              <img src={goldenFaces[currentIndex].image} className="w-full h-full rounded-full object-cover" alt={goldenFaces[currentIndex].name} />
-            ) : (
-              <Star className="w-8 h-8 text-white" />
-            )}
-          </div>
-          <h3 className="text-xl font-bold" style={{ color: "var(--color-text)" }}>
-            {goldenFaces[currentIndex].name}
-          </h3>
-          <p className="text-sm font-medium mt-1" style={{ color: "var(--color-accent)" }}>
-            Lớp {goldenFaces[currentIndex].className}
-          </p>
-          <p className="text-sm mt-3" style={{ color: "var(--color-text-secondary)" }}>
-            {goldenFaces[currentIndex].achievement}
-          </p>
+            <div
+              className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4"
+              style={{ background: "linear-gradient(135deg, #f59e0b, #d97706)" }}
+            >
+              {goldenFaces[currentIndex].image ? (
+                <img src={goldenFaces[currentIndex].image} className="w-full h-full rounded-full object-cover" alt={goldenFaces[currentIndex].name} />
+              ) : (
+                <Star className="w-8 h-8 text-white" />
+              )}
+            </div>
+            <h3 className="text-xl font-bold" style={{ color: "var(--color-text)" }}>
+              {goldenFaces[currentIndex].name}
+            </h3>
+            <p className="text-sm font-medium mt-1" style={{ color: "var(--color-accent)" }}>
+              Lớp {goldenFaces[currentIndex].className}
+            </p>
+            <p className="text-sm mt-3" style={{ color: "var(--color-text-secondary)" }}>
+              {goldenFaces[currentIndex].achievement}
+            </p>
 
-          {/* Dots */}
-          <div className="flex justify-center gap-1.5 mt-4">
-            {goldenFaces.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className="w-2 h-2 rounded-full transition-all cursor-pointer border-none"
-                style={{
-                  background: i === currentIndex ? "var(--color-accent)" : "var(--color-border)",
-                  transform: i === currentIndex ? "scale(1.3)" : "scale(1)",
-                }}
-                aria-label={`Học sinh ${i + 1}`}
-              />
-            ))}
-          </div>
-        </motion.div>
+            {/* Dots */}
+            <div className="flex justify-center gap-1.5 mt-4">
+              {goldenFaces.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className="w-2 h-2 rounded-full transition-all cursor-pointer border-none"
+                  style={{
+                    background: i === currentIndex ? "var(--color-accent)" : "var(--color-border)",
+                    transform: i === currentIndex ? "scale(1.3)" : "scale(1)",
+                  }}
+                  aria-label={`Học sinh ${i + 1}`}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
         {/* Nav buttons */}
         {goldenFaces.length > 1 && (
@@ -264,22 +266,24 @@ function AnnouncementsSection() {
   };
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 mb-16">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
-        📢 Bảng Tin Nhanh
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 mt-20 mb-20">
+      <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
+        📢 Bản Tin Nhanh
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {announcements.slice(0, 3).map((item, i) => {
           const tag = tagConfig[item.tag];
           const IconComponent = tag.icon;
           const isNew = (Date.now() - new Date(item.date).getTime()) < 3 * 24 * 60 * 60 * 1000;
           return (
             <AnimatedSection key={item.id} delay={i * 0.1}>
-              <div
-                className="rounded-xl p-5 transition-all hover:shadow-lg cursor-default"
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-xl p-6 transition-all hover:shadow-xl cursor-pointer"
                 style={{ background: "var(--color-card)", border: "1px solid var(--color-border)" }}
               >
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-4">
                   <span
                     className="text-xs font-semibold px-2 py-0.5 rounded-full flex items-center gap-1"
                     style={{ background: tag.bg, color: tag.color }}
@@ -293,10 +297,10 @@ function AnnouncementsSection() {
                     </span>
                   )}
                 </div>
-                <h3 className="font-semibold text-sm mb-2" style={{ color: "var(--color-text)" }}>{item.title}</h3>
-                <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>{item.summary}</p>
-                <p className="text-xs mt-3 opacity-60" style={{ color: "var(--color-text-secondary)" }}>{item.date}</p>
-              </div>
+                <h3 className="font-semibold text-base mb-2" style={{ color: "var(--color-text)" }}>{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>{item.summary}</p>
+                <p className="text-xs mt-4 opacity-60 font-medium" style={{ color: "var(--color-text-secondary)" }}>{item.date}</p>
+              </motion.div>
             </AnimatedSection>
           );
         })}
@@ -326,11 +330,11 @@ function QuickLinksSection() {
   }
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 mb-16">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 mt-20 mb-20">
+      <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
         🚀 Truy Cập Nhanh
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {links.map((item, i) => {
           const isExternal = item.to.startsWith("http");
           const Wrapper = isExternal ? "a" : Link;
