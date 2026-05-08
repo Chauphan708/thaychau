@@ -4,7 +4,7 @@ export const siteConfig = {
   teacherName: "Nguyễn Văn A",
   school: "Trường Tiểu học Trung An 1",
   district: "Thốt Nốt, TP. Cần Thơ",
-  avatar: "", // Để trống → dùng avatar mặc định
+  avatar: "/images/sample/teacher.png", // Để trống → dùng avatar mặc định
   quote: "\"Giáo dục không phải là đổ đầy một cái bình, mà là thắp sáng một ngọn lửa.\"",
   quoteAuthor: "W.B. Yeats",
   email: "teacher@cantho.edu.vn",
