@@ -156,101 +156,106 @@ function CountdownSection() {
 // ===== GOLDEN FACES =====
 function GoldenFacesSection() {
   const { goldenFaces } = useSiteData();
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    if (goldenFaces.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % goldenFaces.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [goldenFaces.length]);
+  const [isPaused, setIsPaused] = useState(false);
 
   if (goldenFaces.length === 0) return null;
 
-  const prev = () => setCurrentIndex((i) => (i - 1 + goldenFaces.length) % goldenFaces.length);
-  const next = () => setCurrentIndex((i) => (i + 1) % goldenFaces.length);
+  // Duplicate items if too few to make the circle look good
+  const displayItems = goldenFaces.length < 5 
+    ? [...goldenFaces, ...goldenFaces, ...goldenFaces].slice(0, 6) 
+    : goldenFaces;
+    
+  const count = displayItems.length;
+  const radius = Math.max(200, count * 40); // Dynamic radius based on item count
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 mt-16 mb-16">
-      <div className="text-center mb-10">
-        <h2 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 mt-24 mb-24 overflow-visible">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
           ⭐ Gương Mặt Vàng
         </h2>
-        <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>Tuyên dương học sinh xuất sắc</p>
+        <p className="text-base" style={{ color: "var(--color-text-secondary)" }}>Tuyên dương học sinh xuất sắc của lớp</p>
       </div>
 
-      <div className="relative max-w-md mx-auto">
-        {/* Card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="golden-glow rounded-2xl p-6 text-center"
-            style={{ background: "var(--color-card)", border: "2px solid rgba(245,158,11,0.3)" }}
-          >
+      <div 
+        className="relative h-[450px] w-full flex items-center justify-center"
+        style={{ perspective: "1200px" }}
+      >
+        <motion.div
+          className="relative w-[220px] h-[300px]"
+          style={{ transformStyle: "preserve-3d" }}
+          animate={isPaused ? {} : { rotateY: [0, -360] }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {displayItems.map((item, i) => (
             <div
-              className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4"
-              style={{ background: "linear-gradient(135deg, #f59e0b, #d97706)" }}
+              key={i}
+              className="absolute inset-0"
+              style={{
+                transform: `rotateY(${i * (360 / count)}deg) translateZ(${radius}px)`,
+                backfaceVisibility: "hidden",
+              }}
             >
-              {goldenFaces[currentIndex].image ? (
-                <img src={goldenFaces[currentIndex].image} className="w-full h-full rounded-full object-cover" alt={goldenFaces[currentIndex].name} />
-              ) : (
-                <Star className="w-8 h-8 text-white" />
-              )}
+              <div 
+                className="h-full w-full rounded-2xl p-6 text-center flex flex-col items-center justify-center transition-all duration-500 hover:shadow-[0_0_30px_rgba(245,158,11,0.4)]"
+                style={{ 
+                  background: "var(--color-card)", 
+                  border: "2px solid rgba(245,158,11,0.3)",
+                  boxShadow: "0 10px 30px -5px rgba(0,0,0,0.1)"
+                }}
+              >
+                <div
+                  className="w-24 h-24 rounded-full p-1 mb-4 shadow-lg"
+                  style={{ background: "linear-gradient(135deg, #f59e0b, #7c3aed)" }}
+                >
+                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/50 bg-gray-100">
+                    {item.image ? (
+                      <img src={item.image} className="w-full h-full object-cover" alt={item.name} />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">
+                         <Star className="w-10 h-10" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-1" style={{ color: "var(--color-text)" }}>
+                  {item.name}
+                </h3>
+                <p className="text-sm font-bold mb-3 px-3 py-0.5 rounded-full bg-amber-50 text-amber-600 inline-block">
+                  Lớp {item.className}
+                </p>
+                <p className="text-xs line-clamp-3 leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                  {item.achievement}
+                </p>
+                
+                {/* Decorative elements */}
+                <div className="absolute top-2 right-2 opacity-20">
+                  <Star className="w-5 h-5 text-amber-500" />
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-bold" style={{ color: "var(--color-text)" }}>
-              {goldenFaces[currentIndex].name}
-            </h3>
-            <p className="text-sm font-medium mt-1" style={{ color: "var(--color-accent)" }}>
-              Lớp {goldenFaces[currentIndex].className}
-            </p>
-            <p className="text-sm mt-3" style={{ color: "var(--color-text-secondary)" }}>
-              {goldenFaces[currentIndex].achievement}
-            </p>
+          ))}
+        </motion.div>
+        
+        {/* Reflection/Shadow base */}
+        <div 
+          className="absolute bottom-0 w-[400px] h-[40px] bg-black/5 blur-3xl rounded-[100%]"
+          style={{ transform: "rotateX(90deg) translateZ(-150px)" }}
+        />
+      </div>
 
-            {/* Dots */}
-            <div className="flex justify-center gap-1.5 mt-4">
-              {goldenFaces.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentIndex(i)}
-                  className="w-2 h-2 rounded-full transition-all cursor-pointer border-none"
-                  style={{
-                    background: i === currentIndex ? "var(--color-accent)" : "var(--color-border)",
-                    transform: i === currentIndex ? "scale(1.3)" : "scale(1)",
-                  }}
-                  aria-label={`Học sinh ${i + 1}`}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Nav buttons */}
-        {goldenFaces.length > 1 && (
-          <>
-            <button
-              onClick={prev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer border-none"
-              style={{ background: "var(--color-card)", boxShadow: "var(--shadow-md)", color: "var(--color-text)" }}
-              aria-label="Trước"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={next}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer border-none"
-              style={{ background: "var(--color-card)", boxShadow: "var(--shadow-md)", color: "var(--color-text)" }}
-              aria-label="Sau"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </>
-        )}
+      {/* Control Hint */}
+      <div className="text-center mt-8">
+        <p className="text-xs opacity-40 italic" style={{ color: "var(--color-text)" }}>
+          * Di chuột vào để dừng xem chi tiết
+        </p>
       </div>
     </AnimatedSection>
   );
