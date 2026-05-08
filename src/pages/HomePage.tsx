@@ -181,14 +181,20 @@ function GoldenFacesSection() {
         className="relative h-[450px] w-full flex items-center justify-center"
         style={{ perspective: "1200px" }}
       >
-        <motion.div
-          className="relative w-[220px] h-[300px]"
-          style={{ transformStyle: "preserve-3d" }}
-          animate={isPaused ? {} : { rotateY: [0, -360] }}
-          transition={{ 
-            duration: 25, 
-            repeat: Infinity, 
-            ease: "linear" 
+        <style>{`
+          @keyframes rotate-carousel {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(-360deg); }
+          }
+          .animate-3d-carousel {
+            animation: rotate-carousel 25s linear infinite;
+          }
+        `}</style>
+        <div
+          className="animate-3d-carousel relative w-[220px] h-[300px]"
+          style={{ 
+            transformStyle: "preserve-3d",
+            animationPlayState: isPaused ? "paused" : "running"
           }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -242,9 +248,8 @@ function GoldenFacesSection() {
               </div>
             </div>
           ))}
-        </motion.div>
-        
-        {/* Reflection/Shadow base */}
+        </div>
+
         <div 
           className="absolute bottom-0 w-[400px] h-[40px] bg-black/5 blur-3xl rounded-[100%]"
           style={{ transform: "rotateX(90deg) translateZ(-150px)" }}
