@@ -1,5 +1,6 @@
 import { useSiteData } from "@/context/SiteContext";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ExternalLink, Link as LinkIcon } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
@@ -51,11 +52,16 @@ export default function QuickLinksPage() {
 
               return (
                 <AnimatedSection key={page.slug} delay={i * 0.1}>
-                  <Wrapper
-                    {...(extraProps as any)}
-                    className="flex flex-col h-full rounded-2xl p-6 no-underline transition-all hover:-translate-y-1 hover:shadow-xl group"
-                    style={{ background: "var(--color-card)", border: "1px solid var(--color-border)" }}
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="h-full"
                   >
+                    <Wrapper
+                      {...(extraProps as any)}
+                      className="flex flex-col h-full rounded-2xl p-6 no-underline transition-all hover:shadow-xl group"
+                      style={{ background: "var(--color-card)", border: "1px solid var(--color-border)" }}
+                    >
                     <div className="flex items-start justify-between mb-4">
                       <div
                         className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
@@ -74,7 +80,8 @@ export default function QuickLinksPage() {
                       </span>
                     </div>
                   </Wrapper>
-                </AnimatedSection>
+                </motion.div>
+              </AnimatedSection>
               );
             })}
           </div>
