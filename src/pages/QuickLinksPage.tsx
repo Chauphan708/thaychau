@@ -1,6 +1,5 @@
 import { useSiteData } from "@/context/SiteContext";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ExternalLink, Link as LinkIcon } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
