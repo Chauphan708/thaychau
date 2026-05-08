@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   BookOpen, Users, ImageIcon, ExternalLink, Clock,
-  ChevronLeft, ChevronRight, Star, AlertCircle, Info, Calendar,
+  Star, AlertCircle, Info, Calendar,
   GraduationCap,
 } from "lucide-react";
 import { useSiteData } from "@/context/SiteContext";
