@@ -14,11 +14,12 @@ export default function Footer() {
   const [phoneVisible, setPhoneVisible] = useState(false);
 
   return (
-    <footer className="relative mt-20 overflow-hidden border-t" style={{ borderColor: "var(--color-border)", background: "var(--color-bg)" }}>
-      {/* Subtle Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+    <footer className="relative mt-16 overflow-hidden" style={{ background: "var(--color-bg)" }}>
       
-      <div className="container mx-auto max-w-7xl px-4 pt-14 pb-8">
+      <div className="container mx-auto max-w-7xl px-4 pb-8">
+        {/* Clean Top Divider Line */}
+        <div className="w-full h-px mb-10" style={{ background: "var(--color-border)" }} />
+        
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Brand Column */}
