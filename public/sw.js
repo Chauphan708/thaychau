@@ -1,5 +1,5 @@
 // Service Worker for caching app shell & offline capability
-const CACHE_NAME = "thaychau-portfolio-v1";
+const CACHE_NAME = "thaychau-portfolio-v2";
 const ASSETS_TO_CACHE = [
   "/",
   "/index.html",
