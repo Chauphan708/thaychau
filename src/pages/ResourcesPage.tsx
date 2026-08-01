@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Filter, FileText, Presentation, Video, FileIcon,
-  ExternalLink, Download, Star, X, ChevronDown,
+  ExternalLink, Download, Star, X,
 } from "lucide-react";
 import { useSiteData } from "@/context/SiteContext";
 import type { ResourceItem } from "@/data/resources";
@@ -17,6 +17,15 @@ const typeConfig: Record<ResourceItem["type"], { icon: typeof FileText; color: s
   link: { icon: ExternalLink, color: "#16a34a", label: "Liên kết" },
 };
 
+// Expanded category filters
+const categories = [
+  { id: "all", label: "Tất cả học liệu" },
+  { id: "bai-giang", label: "Bài giảng điện tử" },
+  { id: "de-thi", label: "Đề thi & Kiểm tra" },
+  { id: "phieu-bai-tap", label: "Phiếu bài tập" },
+  { id: "giao-an", label: "Giáo án & KHBD" },
+];
+
 // ===== FILTER BAR =====
 function FilterBar({
   searchQuery,
@@ -27,6 +36,8 @@ function FilterBar({
   setSelectedGrade,
   selectedType,
   setSelectedType,
+  selectedCategory,
+  setSelectedCategory,
 }: {
   searchQuery: string;
   setSearchQuery: (v: string) => void;
@@ -36,16 +47,35 @@ function FilterBar({
   setSelectedGrade: (v: number | null) => void;
   selectedType: string;
   setSelectedType: (v: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (v: string) => void;
 }) {
   const { config: siteConfig } = useSiteData();
-  const hasFilters = searchQuery || selectedSubject !== "Tất cả" || selectedGrade !== null || selectedType !== "Tất cả";
+  const hasFilters = searchQuery || selectedSubject !== "Tất cả" || selectedGrade !== null || selectedType !== "Tất cả" || selectedCategory !== "all";
 
   return (
     <AnimatedSection className="container mx-auto max-w-5xl px-4 mb-8">
-      {/* Search */}
-      <div
-        className="relative mb-4"
-      >
+      {/* Category Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setSelectedCategory(cat.id)}
+            className="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer transition-all border-none"
+            style={{
+              background: selectedCategory === cat.id ? "var(--color-primary)" : "var(--color-card)",
+              color: selectedCategory === cat.id ? "#fff" : "var(--color-text)",
+              boxShadow: selectedCategory === cat.id ? "0 4px 12px rgba(37,99,235,0.25)" : "var(--shadow-sm)",
+              border: "1px solid var(--color-border)",
+            }}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Search Input */}
+      <div className="relative mb-4">
         <Search
           className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
           style={{ color: "var(--color-text-secondary)" }}
@@ -54,8 +84,8 @@ function FilterBar({
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Tìm kiếm tài liệu..."
-          className="w-full pl-12 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
+          placeholder="Tìm kiếm tài liệu, tên bài dạy, từ khóa..."
+          className="w-full pl-12 pr-10 py-3.5 rounded-xl text-sm outline-none transition-all shadow-sm"
           style={{
             background: "var(--color-card)",
             border: "1px solid var(--color-border)",
@@ -63,10 +93,18 @@ function FilterBar({
           }}
           maxLength={100}
         />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery("")}
+            className="absolute right-4 top-1/2 -translate-y-1/2 border-none bg-transparent cursor-pointer"
+          >
+            <X className="w-4 h-4" style={{ color: "var(--color-text-secondary)" }} />
+          </button>
+        )}
       </div>
 
       {/* Filter chips */}
-      <div className="flex flex-wrap gap-3 items-start">
+      <div className="flex flex-wrap gap-3 items-center">
         {/* Subject filter */}
         <div className="flex flex-wrap gap-1.5 items-center">
           <Filter className="w-4 h-4 shrink-0" style={{ color: "var(--color-text-secondary)" }} />
@@ -86,49 +124,20 @@ function FilterBar({
         </div>
 
         {/* Grade filter */}
-        <div className="relative">
-          <button
-            className="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border-none transition-all flex items-center gap-1"
-            style={{
-              background: selectedGrade !== null ? "var(--color-primary)" : "var(--color-bg-secondary)",
-              color: selectedGrade !== null ? "#fff" : "var(--color-text-secondary)",
-            }}
-            onClick={() => setSelectedGrade(null)}
-          >
-            {selectedGrade !== null ? `Lớp ${selectedGrade}` : "Tất cả lớp"}
-            <ChevronDown className="w-3 h-3" />
-          </button>
-          <div className="absolute top-full left-0 mt-1 flex gap-1 z-10">
-            {siteConfig.gradeLevels.map((g) => (
-              <button
-                key={g}
-                onClick={() => setSelectedGrade(selectedGrade === g ? null : g)}
-                className="w-7 h-7 rounded-full text-xs font-medium cursor-pointer border-none transition-all"
-                style={{
-                  background: selectedGrade === g ? "var(--color-primary)" : "var(--color-card)",
-                  color: selectedGrade === g ? "#fff" : "var(--color-text-secondary)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                {g}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Type filter */}
-        <div className="flex flex-wrap gap-1.5">
-          {["Tất cả", "pdf", "ppt", "video", "doc", "link"].map((t) => (
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>Khối:</span>
+          {siteConfig.gradeLevels.map((g) => (
             <button
-              key={t}
-              onClick={() => setSelectedType(t)}
-              className="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border-none transition-all"
+              key={g}
+              onClick={() => setSelectedGrade(selectedGrade === g ? null : g)}
+              className="w-7 h-7 rounded-full text-xs font-semibold cursor-pointer border-none transition-all"
               style={{
-                background: selectedType === t ? "var(--color-primary)" : "var(--color-bg-secondary)",
-                color: selectedType === t ? "#fff" : "var(--color-text-secondary)",
+                background: selectedGrade === g ? "var(--color-primary)" : "var(--color-card)",
+                color: selectedGrade === g ? "#fff" : "var(--color-text-secondary)",
+                border: "1px solid var(--color-border)",
               }}
             >
-              {t === "Tất cả" ? t : typeConfig[t as ResourceItem["type"]]?.label ?? t}
+              {g}
             </button>
           ))}
         </div>
@@ -141,8 +150,9 @@ function FilterBar({
               setSelectedSubject("Tất cả");
               setSelectedGrade(null);
               setSelectedType("Tất cả");
+              setSelectedCategory("all");
             }}
-            className="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border-none transition-all flex items-center gap-1"
+            className="px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border-none transition-all flex items-center gap-1 ml-auto"
             style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444" }}
           >
             <X className="w-3 h-3" /> Xóa bộ lọc
@@ -156,8 +166,8 @@ function FilterBar({
 // ===== RESOURCE CARD =====
 function ResourceCard({ item, index }: { item: ResourceItem; index: number }) {
   const config = typeConfig[item.type];
-  const IconComponent = config.icon;
-  const isNew = (Date.now() - new Date(item.date).getTime()) < 7 * 24 * 60 * 60 * 1000;
+  const IconComponent = config?.icon || FileIcon;
+  const isNew = (Date.now() - new Date(item.date).getTime()) < 14 * 24 * 60 * 60 * 1000;
 
   return (
     <motion.div
@@ -165,12 +175,12 @@ function ResourceCard({ item, index }: { item: ResourceItem; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ delay: index * 0.05 }}
+      transition={{ delay: index * 0.04 }}
     >
       <a
         href={item.driveUrl}
         {...safeExternalLinkProps}
-        className="block rounded-xl p-5 h-full no-underline transition-all hover:shadow-lg hover:scale-[1.02] group"
+        className="block rounded-xl p-5 h-full no-underline transition-all hover:shadow-lg hover:scale-[1.01] group"
         style={{
           background: "var(--color-card)",
           border: item.featured
@@ -182,9 +192,9 @@ function ResourceCard({ item, index }: { item: ResourceItem; index: number }) {
           {/* Type icon */}
           <div
             className="w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
-            style={{ background: `${config.color}15` }}
+            style={{ background: `${config?.color || "#3b82f6"}15` }}
           >
-            <IconComponent className="w-5 h-5" style={{ color: config.color }} />
+            <IconComponent className="w-5 h-5" style={{ color: config?.color || "#3b82f6" }} />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -192,9 +202,9 @@ function ResourceCard({ item, index }: { item: ResourceItem; index: number }) {
             <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
               <span
                 className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                style={{ background: `${config.color}15`, color: config.color }}
+                style={{ background: `${config?.color || "#3b82f6"}15`, color: config?.color || "#3b82f6" }}
               >
-                {config.label}
+                {config?.label || item.type}
               </span>
               <span
                 className="text-[10px] font-medium px-2 py-0.5 rounded-full"
@@ -259,6 +269,7 @@ export default function ResourcesPage() {
   const [selectedSubject, setSelectedSubject] = useState("Tất cả");
   const [selectedGrade, setSelectedGrade] = useState<number | null>(null);
   const [selectedType, setSelectedType] = useState("Tất cả");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filtered = useMemo(() => {
     return resources.filter((item) => {
@@ -269,9 +280,16 @@ export default function ResourcesPage() {
       const matchSubject = selectedSubject === "Tất cả" || item.subject === selectedSubject;
       const matchGrade = selectedGrade === null || item.grade === selectedGrade;
       const matchType = selectedType === "Tất cả" || item.type === selectedType;
-      return matchSearch && matchSubject && matchGrade && matchType;
+
+      let matchCategory = true;
+      if (selectedCategory === "bai-giang") matchCategory = item.type === "ppt" || item.type === "video";
+      else if (selectedCategory === "de-thi") matchCategory = item.title.toLowerCase().includes("đề") || item.title.toLowerCase().includes("kiểm tra");
+      else if (selectedCategory === "phieu-bai-tap") matchCategory = item.title.toLowerCase().includes("phiếu") || item.title.toLowerCase().includes("bài tập");
+      else if (selectedCategory === "giao-an") matchCategory = item.type === "doc" || item.type === "pdf";
+
+      return matchSearch && matchSubject && matchGrade && matchType && matchCategory;
     });
-  }, [searchQuery, selectedSubject, selectedGrade, selectedType]);
+  }, [searchQuery, selectedSubject, selectedGrade, selectedType, selectedCategory, resources]);
 
   // Sort: featured first, then by date desc
   const sorted = useMemo(() => {
@@ -293,7 +311,7 @@ export default function ResourcesPage() {
             className="text-3xl md:text-4xl font-bold mb-3"
             style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}
           >
-            📚 Kho Học Liệu
+            📚 Kho Học Liệu Thông Minh
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -302,8 +320,7 @@ export default function ResourcesPage() {
             className="text-sm max-w-lg mx-auto"
             style={{ color: "var(--color-text-secondary)" }}
           >
-            Tài liệu, bài giảng, đề thi được tổng hợp theo môn học và khối lớp.
-            Tất cả đều miễn phí và được lưu trữ trên Google Drive.
+            Tìm kiếm bài giảng, đề thi, phiếu bài tập theo môn học và khối lớp dễ dàng.
           </motion.p>
         </div>
       </section>
@@ -318,6 +335,8 @@ export default function ResourcesPage() {
         setSelectedGrade={setSelectedGrade}
         selectedType={selectedType}
         setSelectedType={setSelectedType}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
       />
 
       {/* Results count */}
@@ -343,7 +362,7 @@ export default function ResourcesPage() {
               className="text-center py-16"
             >
               <Search className="w-12 h-12 mx-auto mb-4 opacity-30" style={{ color: "var(--color-text-secondary)" }} />
-              <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+              <p className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
                 Không tìm thấy tài liệu nào phù hợp.
               </p>
             </motion.div>

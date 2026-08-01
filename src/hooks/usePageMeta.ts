@@ -48,5 +48,23 @@ export function usePageMeta(pathname: string) {
       descTag.setAttribute("content", meta.description);
       document.head.appendChild(descTag);
     }
+
+    // Update Open Graph og:title
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta");
+      ogTitle.setAttribute("property", "og:title");
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute("content", meta.title);
+
+    // Update Open Graph og:description
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) {
+      ogDesc = document.createElement("meta");
+      ogDesc.setAttribute("property", "og:description");
+      document.head.appendChild(ogDesc);
+    }
+    ogDesc.setAttribute("content", meta.description);
   }, [pathname]);
 }

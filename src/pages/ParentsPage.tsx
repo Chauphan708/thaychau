@@ -8,6 +8,7 @@ import { useSiteData } from "@/context/SiteContext";
 import { sanitizeInput } from "@/lib/utils";
 import { checkRateLimit, isHoneypotTriggered, isValidEmail } from "@/lib/security";
 import AnimatedSection from "@/components/shared/AnimatedSection";
+import StudentLookupSection from "@/components/parents/StudentLookupSection";
 
 // ===== WEEKLY SCHEDULE TABLE =====
 function ScheduleSection() {
@@ -452,6 +453,7 @@ export default function ParentsPage() {
         </div>
       </section>
 
+      <StudentLookupSection />
       <ScheduleSection />
       <NoticesSection />
       <FeedbackForm />
