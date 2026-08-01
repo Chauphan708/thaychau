@@ -18,11 +18,11 @@ export default function Footer() {
       {/* Subtle Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
-      <div className="container mx-auto max-w-7xl px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div className="container mx-auto max-w-7xl px-4 pt-10 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Brand Column */}
-          <div className="md:col-span-5 flex flex-col gap-6">
+          <div className="md:col-span-5 flex flex-col gap-4">
             <Link to="/" className="flex items-center gap-2.5 no-underline group">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12" 
                 style={{ background: "linear-gradient(135deg, var(--color-primary), #7c3aed)" }}>
@@ -37,31 +37,31 @@ export default function Footer() {
               {siteConfig.quote}
             </p>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <a href={siteConfig.facebookLink} target="_blank" rel="noopener noreferrer" 
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
                 style={{ background: "var(--color-bg-secondary)", color: "var(--color-text)" }}
                 aria-label="Facebook">
-                <MessageCircle className="w-5 h-5" />
+                <MessageCircle className="w-4 h-4" />
               </a>
               <a href={siteConfig.zaloLink} target="_blank" rel="noopener noreferrer" 
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
                 style={{ background: "var(--color-bg-secondary)", color: "var(--color-text)" }}
                 aria-label="Zalo">
-                <MessageCircle className="w-5 h-5" />
+                <MessageCircle className="w-4 h-4" />
               </a>
             </div>
           </div>
 
           {/* Contact Column */}
-          <div className="md:col-span-4 flex flex-col gap-6">
+          <div className="md:col-span-4 flex flex-col gap-4">
             <h4 className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--color-text-secondary)" }}>
               Thông tin liên hệ
             </h4>
             
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3 group">
-                <div className="mt-1 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(37,99,235,0.08)" }}>
+                <div className="mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(37,99,235,0.08)" }}>
                   <Mail className="w-4 h-4" style={{ color: "var(--color-primary)" }} />
                 </div>
                 <div>
@@ -73,7 +73,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-start gap-3 group">
-                <div className="mt-1 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(22,163,74,0.08)" }}>
+                <div className="mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(22,163,74,0.08)" }}>
                   <Phone className="w-4 h-4" style={{ color: "var(--color-secondary)" }} />
                 </div>
                 <div>
@@ -89,7 +89,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-start gap-3 group">
-                <div className="mt-1 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(245,158,11,0.08)" }}>
+                <div className="mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(245,158,11,0.08)" }}>
                   <MapPin className="w-4 h-4" style={{ color: "var(--color-accent)" }} />
                 </div>
                 <div>
@@ -103,11 +103,11 @@ export default function Footer() {
           </div>
 
           {/* Quick Links Column */}
-          <div className="md:col-span-3 flex flex-col gap-6">
+          <div className="md:col-span-3 flex flex-col gap-4">
             <h4 className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--color-text-secondary)" }}>
               Liên kết nhanh
             </h4>
-            <nav className="flex flex-col gap-3">
+            <nav className="flex flex-col gap-2.5">
               {[
                 { to: "/ho-so", label: "Về giáo viên" },
                 { to: "/hoc-lieu", label: "Kho học liệu" },
@@ -132,7 +132,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderColor: "var(--color-border)" }}>
+        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-3" style={{ borderColor: "var(--color-border)" }}>
           <p className="text-xs flex items-center gap-1" style={{ color: "var(--color-text-secondary)" }}>
             © {currentYear} {siteConfig.teacherName}. Made with <Heart className="w-3 h-3 fill-red-500 text-red-500" /> for Education.
             <Link to="/admin" className="ml-2 opacity-20 hover:opacity-100 transition-opacity no-underline" style={{ color: "var(--color-text-secondary)" }}>• Admin</Link>
