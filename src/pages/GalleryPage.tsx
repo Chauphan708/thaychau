@@ -6,7 +6,7 @@ import { galleryCategories } from "@/data/gallery";
 import type { GalleryCategory, GalleryImage } from "@/data/gallery";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 
-// ===== LIGHTBOX =====
+// ===== LIGHTBOX WITH INTERACTIVE MAGNIFIER (Kính lúp soi chi tiết) =====
 function Lightbox({
   images,
   currentIndex,
@@ -21,6 +21,8 @@ function Lightbox({
   onNext: () => void;
 }) {
   const image = images[currentIndex];
+  const [magnifierPos, setMagnifierPos] = useState<{ x: number; y: number; show: boolean }>({ x: 0, y: 0, show: false });
+  const [zoomLevel, setZoomLevel] = useState<number>(2.5);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -31,35 +33,55 @@ function Lightbox({
     [onClose, onPrev, onNext],
   );
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setMagnifierPos({ x, y, show: true });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)" }}
+      className="fixed inset-0 z-50 flex items-center justify-center select-none"
+      style={{ background: "rgba(0,0,0,0.94)", backdropFilter: "blur(12px)" }}
       onClick={onClose}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="dialog"
       aria-label="Xem ảnh"
     >
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border-none z-10 hover:scale-110 transition-transform"
-        style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
-        aria-label="Đóng"
-      >
-        <X className="w-5 h-5" />
-      </button>
-
-      <div
-        className="absolute top-4 left-4 px-4 py-1.5 rounded-full text-xs font-semibold text-white"
-        style={{ background: "rgba(255,255,255,0.15)" }}
-      >
-        {currentIndex + 1} / {images.length}
+      {/* Top Bar Controls */}
+      <div className="absolute top-4 right-4 flex items-center gap-3 z-20" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={() => setZoomLevel((z) => (z === 2.5 ? 3.5 : z === 3.5 ? 1.8 : 2.5))}
+          className="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer border-none transition-transform hover:scale-105"
+          style={{ background: "rgba(255,255,255,0.18)", color: "#fff" }}
+        >
+          <ZoomIn className="w-3.5 h-3.5" /> Kính lúp: {zoomLevel}x
+        </button>
+        <button
+          onClick={onClose}
+          className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border-none z-10 hover:scale-110 transition-transform"
+          style={{ background: "rgba(255,255,255,0.2)", color: "#fff" }}
+          aria-label="Đóng"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
+      {/* Counter & Hint */}
+      <div
+        className="absolute top-4 left-4 px-4 py-1.5 rounded-full text-xs font-semibold text-white flex items-center gap-2"
+        style={{ background: "rgba(255,255,255,0.15)" }}
+      >
+        <span>{currentIndex + 1} / {images.length}</span>
+        <span className="opacity-60 font-normal">| Rê chuột vào ảnh để soi kính lúp 🔍</span>
+      </div>
+
+      {/* Prev */}
       {images.length > 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); onPrev(); }}
@@ -71,6 +93,7 @@ function Lightbox({
         </button>
       )}
 
+      {/* Next */}
       {images.length > 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); onNext(); }}
@@ -82,21 +105,44 @@ function Lightbox({
         </button>
       )}
 
+      {/* Image with Interactive Glass Lens (Kính Lúp Soi Chi Tiết) */}
       <motion.div
         key={image.id}
         initial={{ opacity: 0, scale: 0.88, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.88, y: 10 }}
         transition={{ duration: 0.25 }}
-        className="max-w-[90vw] max-h-[85vh] flex flex-col items-center"
+        className="max-w-[90vw] max-h-[85vh] flex flex-col items-center relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src={image.src}
-          alt={image.title}
-          className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
-          loading="lazy"
-        />
+        <div
+          className="relative overflow-hidden rounded-2xl cursor-crosshair shadow-2xl"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setMagnifierPos((p) => ({ ...p, show: false }))}
+        >
+          <img
+            src={image.src}
+            alt={image.title}
+            className="max-w-full max-h-[72vh] object-contain rounded-2xl block"
+            loading="lazy"
+          />
+
+          {/* Floating Glass Lens (Thấu kính soi kính lúp) */}
+          {magnifierPos.show && (
+            <div
+              className="pointer-events-none absolute w-44 h-44 rounded-full border-4 border-white/90 shadow-2xl overflow-hidden -translate-x-1/2 -translate-y-1/2 z-30"
+              style={{
+                left: `${magnifierPos.x}%`,
+                top: `${magnifierPos.y}%`,
+                backgroundImage: `url(${image.src})`,
+                backgroundPosition: `${magnifierPos.x}% ${magnifierPos.y}%`,
+                backgroundSize: `${zoomLevel * 100}%`,
+                boxShadow: "0 0 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.3)",
+              }}
+            />
+          )}
+        </div>
+
         <div className="mt-4 text-center">
           <p className="text-white text-base font-bold">{image.title}</p>
           <p className="text-white/70 text-xs mt-1 flex items-center justify-center gap-1.5">
