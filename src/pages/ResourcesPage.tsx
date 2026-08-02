@@ -54,9 +54,9 @@ function FilterBar({
   const hasFilters = searchQuery || selectedSubject !== "Tất cả" || selectedGrade !== null || selectedType !== "Tất cả" || selectedCategory !== "all";
 
   return (
-    <AnimatedSection className="container mx-auto max-w-5xl px-4 mb-8">
+    <AnimatedSection className="container mx-auto max-w-5xl px-4" style={{ marginTop: "40px", marginBottom: "40px" }}>
       {/* Category Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" style={{ marginBottom: "28px" }}>
         {categories.map((cat) => (
           <button
             key={cat.id}
@@ -75,7 +75,7 @@ function FilterBar({
       </div>
 
       {/* Search Input */}
-      <div className="relative mb-4">
+      <div className="relative" style={{ marginBottom: "24px" }}>
         <Search
           className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5"
           style={{ color: "var(--color-text-secondary)" }}
@@ -303,7 +303,7 @@ export default function ResourcesPage() {
   return (
     <main>
       {/* Header */}
-      <section className="py-12 md:py-16">
+      <section className="pt-12 pb-8">
         <div className="container mx-auto max-w-5xl px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -340,7 +340,7 @@ export default function ResourcesPage() {
       />
 
       {/* Results count */}
-      <div className="container mx-auto max-w-5xl px-4 mb-4">
+      <div className="container mx-auto max-w-5xl px-4" style={{ marginTop: "24px", marginBottom: "24px" }}>
         <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
           Hiển thị <strong>{sorted.length}</strong> / {resources.length} tài liệu
         </p>
