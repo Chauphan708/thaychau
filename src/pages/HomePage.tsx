@@ -169,9 +169,9 @@ function GoldenFacesSection() {
   const radius = Math.max(200, count * 40); // Dynamic radius based on item count
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 overflow-visible" style={{ marginTop: "120px", marginBottom: "80px" }}>
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)", marginTop: "40px" }}>
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 overflow-visible" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <div className="text-center" style={{ marginBottom: "48px" }}>
+        <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
           ⭐ Gương Mặt Vàng
         </h2>
         <p className="text-base" style={{ color: "var(--color-text-secondary)" }}>Tuyên dương học sinh xuất sắc của lớp</p>
@@ -276,8 +276,8 @@ function AnnouncementsSection() {
   };
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4" style={{ marginTop: "140px", marginBottom: "80px" }}>
-      <h2 className="text-2xl md:text-3xl font-bold text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)", marginTop: "40px", marginBottom: "40px" }}>
+    <AnimatedSection className="container mx-auto max-w-7xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <h2 className="text-2xl md:text-3xl font-bold text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)", marginBottom: "48px" }}>
         📢 Bản Tin Nhanh
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -340,8 +340,8 @@ function QuickLinksSection() {
   }
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4" style={{ marginTop: "140px", marginBottom: "80px" }}>
-      <h2 className="text-2xl md:text-3xl font-bold text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)", marginTop: "40px", marginBottom: "40px" }}>
+    <AnimatedSection className="container mx-auto max-w-7xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <h2 className="text-2xl md:text-3xl font-bold text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)", marginBottom: "48px" }}>
         🚀 Truy Cập Nhanh
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
