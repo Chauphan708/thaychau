@@ -160,8 +160,8 @@ function FunFactsSection() {
 function PhilosophySection() {
   const { philosophies } = useSiteData();
   return (
-    <AnimatedSection className="container mx-auto max-w-5xl px-4 pt-16 pb-16 my-8">
-      <div className="text-center mb-10">
+    <AnimatedSection className="container mx-auto max-w-5xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <div className="text-center" style={{ marginBottom: "48px" }}>
         <h2
           className="text-2xl md:text-3xl font-bold mb-2"
           style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}
@@ -218,8 +218,8 @@ function TimelineSection() {
   const visibleItems = expanded ? milestones : milestones.slice(0, 4);
 
   return (
-    <AnimatedSection className="container mx-auto max-w-5xl px-4 pt-16 pb-16 my-8">
-      <div className="text-center mb-10">
+    <AnimatedSection className="container mx-auto max-w-5xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <div className="text-center" style={{ marginBottom: "48px" }}>
         <h2
           className="text-2xl md:text-3xl font-bold mb-2"
           style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}
@@ -331,8 +331,8 @@ function SkillsSection() {
   ];
 
   return (
-    <AnimatedSection className="container mx-auto max-w-5xl px-4 pt-16 pb-16 my-8">
-      <div className="text-center mb-10">
+    <AnimatedSection className="container mx-auto max-w-5xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <div className="text-center" style={{ marginBottom: "48px" }}>
         <h2
           className="text-2xl md:text-3xl font-bold mb-2"
           style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}
@@ -411,8 +411,8 @@ function SkillsSection() {
 function CertificatesSection() {
   const { certificates } = useSiteData();
   return (
-    <AnimatedSection className="container mx-auto max-w-5xl px-4 pt-16 pb-16 my-8">
-      <div className="text-center mb-10">
+    <AnimatedSection className="container mx-auto max-w-5xl px-4" style={{ marginTop: "60px", marginBottom: "60px" }}>
+      <div className="text-center" style={{ marginBottom: "48px" }}>
         <h2
           className="text-2xl md:text-3xl font-bold mb-2"
           style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}
