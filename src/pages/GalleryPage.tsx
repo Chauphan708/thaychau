@@ -21,8 +21,15 @@ function Lightbox({
   onNext: () => void;
 }) {
   const image = images[currentIndex];
-  const [magnifierPos, setMagnifierPos] = useState<{ x: number; y: number; show: boolean }>({ x: 0, y: 0, show: false });
+  const [magnifierPos, setMagnifierPos] = useState<{ x: number; y: number; px: number; py: number; show: boolean }>({
+    x: 0,
+    y: 0,
+    px: 0,
+    py: 0,
+    show: false,
+  });
   const [zoomLevel, setZoomLevel] = useState<number>(2.5);
+  const [imgSize, setImgSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -34,10 +41,13 @@ function Lightbox({
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    setMagnifierPos({ x, y, show: true });
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = e.clientX - rect.left;
+    const py = e.clientY - rect.top;
+    const x = (px / rect.width) * 100;
+    const y = (py / rect.height) * 100;
+    setImgSize({ width: rect.width, height: rect.height });
+    setMagnifierPos({ x, y, px, py, show: true });
   };
 
   return (
@@ -56,11 +66,11 @@ function Lightbox({
       {/* Top Bar Controls */}
       <div className="absolute top-4 right-4 flex items-center gap-3 z-20" onClick={(e) => e.stopPropagation()}>
         <button
-          onClick={() => setZoomLevel((z) => (z === 2.5 ? 3.5 : z === 3.5 ? 1.8 : 2.5))}
-          className="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer border-none transition-transform hover:scale-105"
-          style={{ background: "rgba(255,255,255,0.18)", color: "#fff" }}
+          onClick={() => setZoomLevel((z) => (z === 2.5 ? 3.5 : z === 3.5 ? 2.0 : 2.5))}
+          className="px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer border-none transition-transform hover:scale-105"
+          style={{ background: "rgba(255,255,255,0.2)", color: "#fff" }}
         >
-          <ZoomIn className="w-3.5 h-3.5" /> Kính lúp: {zoomLevel}x
+          <ZoomIn className="w-3.5 h-3.5" /> Mức soi: {zoomLevel}x
         </button>
         <button
           onClick={onClose}
@@ -78,7 +88,7 @@ function Lightbox({
         style={{ background: "rgba(255,255,255,0.15)" }}
       >
         <span>{currentIndex + 1} / {images.length}</span>
-        <span className="opacity-60 font-normal">| Rê chuột vào ảnh để soi kính lúp 🔍</span>
+        <span className="opacity-60 font-normal hidden sm:inline">| Di chuyển chuột trên ảnh để kính lúp phóng to 🔍</span>
       </div>
 
       {/* Prev */}
@@ -116,7 +126,7 @@ function Lightbox({
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className="relative overflow-hidden rounded-2xl cursor-crosshair shadow-2xl"
+          className="relative rounded-2xl cursor-crosshair shadow-2xl overflow-hidden"
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setMagnifierPos((p) => ({ ...p, show: false }))}
         >
@@ -127,18 +137,19 @@ function Lightbox({
             loading="lazy"
           />
 
-          {/* Floating Glass Lens (Thấu kính soi kính lúp) */}
-          {magnifierPos.show && (
+          {/* Floating Glass Lens (Thấu kính soi kính lúp chuẩn tỷ lệ) */}
+          {magnifierPos.show && imgSize.width > 0 && (
             <div
-              className="pointer-events-none absolute w-52 h-52 rounded-full border-4 border-white shadow-2xl overflow-hidden -translate-x-1/2 -translate-y-1/2 z-30"
+              className="pointer-events-none absolute w-56 h-56 rounded-full border-4 border-white shadow-2xl overflow-hidden z-30"
               style={{
-                left: `${magnifierPos.x}%`,
-                top: `${magnifierPos.y}%`,
+                top: `${magnifierPos.py}px`,
+                left: `${magnifierPos.px}px`,
+                transform: "translate(-50%, -50%)",
                 backgroundImage: `url(${image.src})`,
-                backgroundPosition: `${magnifierPos.x}% ${magnifierPos.y}%`,
+                backgroundPosition: `-${magnifierPos.px * zoomLevel - 112}px -${magnifierPos.py * zoomLevel - 112}px`,
                 backgroundRepeat: "no-repeat",
-                backgroundSize: `${zoomLevel * 100}% ${zoomLevel * 100}%`,
-                boxShadow: "0 0 35px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.4)",
+                backgroundSize: `${imgSize.width * zoomLevel}px ${imgSize.height * zoomLevel}px`,
+                boxShadow: "0 0 35px rgba(0,0,0,0.7), inset 0 0 25px rgba(255,255,255,0.4)",
               }}
             />
           )}
