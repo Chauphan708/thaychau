@@ -130,14 +130,15 @@ function Lightbox({
           {/* Floating Glass Lens (Thấu kính soi kính lúp) */}
           {magnifierPos.show && (
             <div
-              className="pointer-events-none absolute w-44 h-44 rounded-full border-4 border-white/90 shadow-2xl overflow-hidden -translate-x-1/2 -translate-y-1/2 z-30"
+              className="pointer-events-none absolute w-52 h-52 rounded-full border-4 border-white shadow-2xl overflow-hidden -translate-x-1/2 -translate-y-1/2 z-30"
               style={{
                 left: `${magnifierPos.x}%`,
                 top: `${magnifierPos.y}%`,
                 backgroundImage: `url(${image.src})`,
                 backgroundPosition: `${magnifierPos.x}% ${magnifierPos.y}%`,
-                backgroundSize: `${zoomLevel * 100}%`,
-                boxShadow: "0 0 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.3)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: `${zoomLevel * 100}% ${zoomLevel * 100}%`,
+                boxShadow: "0 0 35px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.4)",
               }}
             />
           )}
