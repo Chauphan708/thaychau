@@ -169,7 +169,7 @@ function GoldenFacesSection() {
   const radius = Math.max(200, count * 40); // Dynamic radius based on item count
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-24 pb-16 mt-20 mb-24 overflow-visible">
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-36 pb-20 mt-32 mb-28 overflow-visible">
       <div className="text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
           ⭐ Gương Mặt Vàng
@@ -276,7 +276,7 @@ function AnnouncementsSection() {
   };
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-24 pb-16 mt-20 mb-12">
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-36 pb-20 mt-32 mb-20">
       <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
         📢 Bản Tin Nhanh
       </h2>
@@ -340,7 +340,7 @@ function QuickLinksSection() {
   }
 
   return (
-    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-24 pb-16 mt-20 mb-12">
+    <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-36 pb-20 mt-32 mb-20">
       <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
         🚀 Truy Cập Nhanh
       </h2>
