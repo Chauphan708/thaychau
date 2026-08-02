@@ -277,7 +277,7 @@ function AnnouncementsSection() {
 
   return (
     <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-36 pb-20 mt-32 mb-20">
-      <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
         📢 Bản Tin Nhanh
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -341,7 +341,7 @@ function QuickLinksSection() {
 
   return (
     <AnimatedSection className="container mx-auto max-w-7xl px-4 pt-36 pb-20 mt-32 mb-20">
-      <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ fontFamily: "var(--font-heading)", color: "var(--color-text)" }}>
         🚀 Truy Cập Nhanh
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
